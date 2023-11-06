@@ -1,1 +1,1 @@
-# Init.Ai-Website-Backend
+# InitAI-Backend
