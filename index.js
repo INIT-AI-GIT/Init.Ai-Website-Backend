@@ -1,22 +1,27 @@
-require('dotenv/config')
-require('express-async-errors')
-const express = require('express')
-const { App } =  require('./services/ExpressApp')
+require("dotenv").config();
+const express = require("express");
+const mongoose = require('mongoose');
+const achievementRouter = require("./routes/Achievement");
+const PORT = process.env.PORT || 5000;
+const DB = process.env.DATABASE 
 
-const PORT = process.env.PORT || 8000;
+const app = express()
 
-const StartServer = async ()=>{
-    const app = express();
 
-    await App(app)
+//middleware
+app.use(express.json())
+app.use(achievementRouter)
 
-    app.get('/', async (req, res, next) => {
-        return res.status(200).send("<h1>Init Backend Index</h1>");
-    })
 
-    app.listen(PORT,()=>{
-        console.log(`Listening at port ${PORT}`)
-    })
-}
+mongoose.connect(DB).then(() => {
+    console.log('connected')
+}).catch(err => console.log(err));
 
-StartServer();
+
+app.get('/api/',(req,res) => {
+    res.json({status:"success"})
+})
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`live on http://localhost:${PORT}/api/`);
+})
