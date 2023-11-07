@@ -9,6 +9,7 @@ const achievementSchema = new mongoose.Schema({
   date: Date, // Date
   year: String, // Year
   type: String, // Type
+  url: String, // URL
 });
 
 const Achievement = mongoose.model("Achievement", achievementSchema);
